@@ -44,5 +44,6 @@ def validate(data):
     is_invalid = False
 
     for index, dictionary in enumerate(data):
-        pass
-
+         if not isinstance(dictionary, dict):
+            print(f"Invalid format: expected a dictionary at position {index}.")
+            is_invalid = True
