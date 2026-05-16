@@ -38,7 +38,7 @@ def validate(data):
     is_sequence = isinstance(data, (list, tuple))
 
     if not is_sequence:
-        print('Invalid format: expected a list or tuple.')
+        print("Invalid format: expected a list or tuple.")
         return False
 
     is_invalid = False
@@ -48,11 +48,11 @@ def validate(data):
             print(f"Invalid format: expected a dictionary at position {index}.")
             is_invalid = True
 
-     if is_invalid:
+    if is_invalid: 
         return False
 
-     print('Valid format.')
-     return True
+    print("Valid format.")
+    return True
 
 
 validate(medical_records)
