@@ -47,3 +47,12 @@ def validate(data):
          if not isinstance(dictionary, dict):
             print(f"Invalid format: expected a dictionary at position {index}.")
             is_invalid = True
+
+     if is_invalid:
+        return False
+
+     print('Valid format.')
+     return True
+
+
+validate(medical_records)
