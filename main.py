@@ -46,7 +46,7 @@ def find_invalid_records(
         'last_visit_id': isinstance(last_visit_id, str) and re.fullmatch('v\d+', last_visit_id, re.IGNORECASE)
     }
     
-    return [key for key, value in constraints.items()]
+    return [key for key, value in constraints.items() is value == False]
 
 
 def validate(data):
