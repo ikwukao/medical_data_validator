@@ -17,37 +17,37 @@ import re
 # =========================================================
 medical_records = [
     {
-        'patient_id': 'P1001',
-        'age': 34,
-        'gender': 'Female',
-        'diagnosis': 'Hypertension',
-        'medications': ['Lisinopril'],
-        'last_visit_id': 'V2301',
+        "patient_id": "P1001",
+        "age": 34,
+        "gender": "Female",
+        "diagnosis": "Hypertension",
+        "medications": ["Lisinopril"],
+        "last_visit_id": "V2301",
     },
     {
-        'patient_id': 'p1002',
-        'age': 47,
-        'gender': 'male',
-        'diagnosis': 'Type 2 Diabetes',
-        'medications': ['Metformin', 'Insulin'],
-        'last_visit_id': 'v2302',
+        "patient_id": "p1002",
+        "age": 47,
+        "gender": "male",
+        "diagnosis": "Type 2 Diabetes",
+        "medications": ["Metformin", "Insulin"],
+        "last_visit_id": "v2302",
     },
     {
-        'patient_id': 'P1003',
-        'age': 29,
-        'gender': 'female',
-        'diagnosis': 'Asthma',
-        'medications': ['Albuterol'],
-        'last_visit_id': 'v2303',
+        "patient_id": "P1003",
+        "age": 29,
+        "gender": "female",
+        "diagnosis": "Asthma",
+        "medications": ["Albuterol"],
+        "last_visit_id": "v2303",
     },
     {
-        'patient_id': 'p1004',
-        'age': 56,
-        'gender': 'Male',
-        'diagnosis': 'Chronic Back Pain',
-        'medications': ['Ibuprofen', 'Physical Therapy'],
-        'last_visit_id': 'V2304',
-    }
+        "patient_id": "p1004",
+        "age": 56,
+        "gender": "Male",
+        "diagnosis": "Chronic Back Pain",
+        "medications": ["Ibuprofen", "Physical Therapy"],
+        "last_visit_id": "V2304",
+    },
 ]
 
 
@@ -66,12 +66,7 @@ medical_records = [
 # The function returns a list of invalid field names.
 # =========================================================
 def find_invalid_records(
-    patient_id,
-    age,
-    gender,
-    diagnosis,
-    medications,
-    last_visit_id
+    patient_id, age, gender, diagnosis, medications, last_visit_id
 ):
 
     # -----------------------------------------------------
@@ -82,7 +77,6 @@ def find_invalid_records(
     # that field is considered invalid.
     # -----------------------------------------------------
     constraints = {
-
         # Validate patient ID:
         # - Must be a string
         # - Must start with "p" followed by digits
@@ -92,48 +86,34 @@ def find_invalid_records(
         # P1001 -> valid
         # p5002 -> valid
         # PX100 -> invalid
-        'patient_id': (
+        "patient_id": (
             isinstance(patient_id, str)
-            and re.fullmatch(r'p\d+', patient_id, re.IGNORECASE)
+            and re.fullmatch(r"p\d+", patient_id, re.IGNORECASE)
         ),
-
         # Validate age:
         # - Must be an integer
         # - Must be 18 or older
-        'age': (
-            isinstance(age, int)
-            and age >= 18
-        ),
-
+        "age": (isinstance(age, int) and age >= 18),
         # Validate gender:
         # - Must be a string
         # - Must match either "male" or "female"
         # - lower() ensures case-insensitive comparison
-        'gender': (
-            isinstance(gender, str)
-            and gender.lower() in ('male', 'female')
-        ),
-
+        "gender": (isinstance(gender, str) and gender.lower() in ("male", "female")),
         # Validate diagnosis:
         # - Must be a string
         # - OR can be None
         #
         # This allows nullable diagnosis fields.
-        'diagnosis': (
-            isinstance(diagnosis, str)
-            or diagnosis is None
-        ),
-
+        "diagnosis": (isinstance(diagnosis, str) or diagnosis is None),
         # Validate medications:
         # - Must be a list
         # - Every item inside the list must be a string
         #
         # all() ensures every condition evaluates to True.
-        'medications': (
+        "medications": (
             isinstance(medications, list)
             and all([isinstance(i, str) for i in medications])
         ),
-
         # Validate last visit ID:
         # - Must be a string
         # - Must follow the format "v" + digits
@@ -142,10 +122,10 @@ def find_invalid_records(
         # V2301 -> valid
         # v9002 -> valid
         # visit12 -> invalid
-        'last_visit_id': (
+        "last_visit_id": (
             isinstance(last_visit_id, str)
-            and re.fullmatch(r'v\d+', last_visit_id, re.IGNORECASE)
-        )
+            and re.fullmatch(r"v\d+", last_visit_id, re.IGNORECASE)
+        ),
     }
 
     # -----------------------------------------------------
@@ -158,11 +138,7 @@ def find_invalid_records(
     #
     # Only fields that fail validation are returned.
     # -----------------------------------------------------
-    return [
-        key
-        for key, value in constraints.items()
-        if not value
-    ]
+    return [key for key, value in constraints.items() if not value]
 
 
 # =========================================================
@@ -189,7 +165,7 @@ def validate(data):
     is_sequence = isinstance(data, (list, tuple))
 
     if not is_sequence:
-        print('Invalid format: expected a list or tuple.')
+        print("Invalid format: expected a list or tuple.")
         return False
 
     # -----------------------------------------------------
@@ -205,14 +181,9 @@ def validate(data):
     #
     # Using a set makes equality comparison easy.
     # -----------------------------------------------------
-    key_set = set([
-        'patient_id',
-        'age',
-        'gender',
-        'diagnosis',
-        'medications',
-        'last_visit_id'
-    ])
+    key_set = set(
+        ["patient_id", "age", "gender", "diagnosis", "medications", "last_visit_id"]
+    )
 
     # -----------------------------------------------------
     # Iterate through every record in the dataset
@@ -222,15 +193,11 @@ def validate(data):
     # - dictionary -> current patient record
     # -----------------------------------------------------
     for index, dictionary in enumerate(data):
-
         # -------------------------------------------------
         # Ensure each record is a dictionary
         # -------------------------------------------------
         if not isinstance(dictionary, dict):
-
-            print(
-                f'Invalid format: expected a dictionary at position {index}.'
-            )
+            print(f"Invalid format: expected a dictionary at position {index}.")
 
             is_invalid = True
             continue
@@ -243,10 +210,9 @@ def validate(data):
         # - no extra keys
         # -------------------------------------------------
         if set(dictionary.keys()) != key_set:
-
             print(
-                f'Invalid format: {dictionary} '
-                f'at position {index} has missing and/or invalid keys.'
+                f"Invalid format: {dictionary} "
+                f"at position {index} has missing and/or invalid keys."
             )
 
             is_invalid = True
@@ -269,14 +235,10 @@ def validate(data):
         # - the record index
         # -------------------------------------------------
         for key in invalid_records:
-
             # Retrieve the invalid value
             val = dictionary[key]
 
-            print(
-                f"Unexpected format '{key}: {val}' "
-                f'at position {index}.'
-            )
+            print(f"Unexpected format '{key}: {val}' at position {index}.")
 
             # Mark dataset as invalid
             is_invalid = True
@@ -287,7 +249,7 @@ def validate(data):
     if is_invalid:
         return False
 
-    print('Valid format.')
+    print("Valid format.")
     return True
 
 
